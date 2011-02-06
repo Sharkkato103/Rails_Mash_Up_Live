@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @question.title %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @question.body %>
+</p>
+
+<p>
+  <b>Course:</b>
+  <%= @question.course_id %>
+</p>
+
+<% Response.find_all_by_qid(@question.id).each do |response| %>
+	<%= response.body %> <br />
+  <%= link_to 'Edit', edit_response_path(response) %> |
+	<br /> <br />
+<% end %>
+
+<%= link_to 'Respond to this Question', new_response_path %> <br />
+
+
+<%= link_to 'Edit', edit_question_path(@question) %> |
+<%= link_to 'Destroy', @question,
+	 :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Back', @course %>

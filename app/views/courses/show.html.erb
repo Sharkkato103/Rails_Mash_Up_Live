@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @course.id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @course.title %>
+</p>
+
+<p>
+  <b>Professor:</b>
+  <%= @course.professor %>
+</p>
+
+<p>
+	Session: <%= session[:course_id] %>
+</p>
+
+<% Question.find_all_by_course_id(@course.id).each do |question| %>
+	<%= link_to question.title, question %> <br />
+<% end %>
+
+<%= link_to 'Make a new Question', new_question_path %> <br />
+
+<%= link_to 'Edit', edit_course_path(@course) %> 
+<%= link_to 'Back', courses_path %>
