@@ -19,8 +19,10 @@
 	Session: <%= session[:course_id] %>
 </p>
 
-<% Question.find_all_by_course_id(@course.id).each do |question| %>
-	<%= link_to question.title, question %> <br />
+<% if @course.questions %>
+	<% @course.questions.each do |question| %>
+		<%= link_to question.title, question %> <br />
+	<% end %>
 <% end %>
 
 <%= link_to 'Make a new Question', new_question_path %> <br />

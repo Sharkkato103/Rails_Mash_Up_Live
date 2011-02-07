@@ -4,10 +4,10 @@ class ApplicationController < ActionController::Base
   private
   
   def current_course
-  	Course.find(session[:course_id])
+  	@course ||= Course.find(session[:course_id])
   end
   
   def current_question
-  	Question.find(session[:qid])
+  	@question ||= Question.find(session[:question_id])
   end
 end

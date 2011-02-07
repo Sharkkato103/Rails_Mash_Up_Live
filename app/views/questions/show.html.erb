@@ -15,10 +15,12 @@
   <%= @question.course_id %>
 </p>
 
-<% Response.find_all_by_qid(@question.id).each do |response| %>
-	<%= response.body %> <br />
-  <%= link_to 'Edit', edit_response_path(response) %> |
-	<br /> <br />
+<% if @question.responses %>
+	<% @question.responses.each do |response| %>
+		<%= response.body %> <br />
+		<%= link_to 'Edit', edit_response_path(response) %>
+		<br /> <br />
+	<% end %>
 <% end %>
 
 <%= link_to 'Respond to this Question', new_response_path %> <br />

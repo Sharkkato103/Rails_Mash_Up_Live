@@ -4,24 +4,27 @@ class QuestionsController < ApplicationController
 	
 #  def index
 #    @questions = Question.all
-#    session[:qid] = nil
+#    session[:question_id] = nil
 
 #    respond_to do |format|
 #      format.html # index.html.erb
 #      format.xml  { render :xml => @questions }
 #    end
 #  end
-
+	
+	respond_to :json
+	
   # GET /questions/1
   # GET /questions/1.xml
   def show
   	@course = current_course
     @question = Question.find(params[:id])
-    session[:qid] = @question.id
+    session[:question_id] = @question.id
     
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @question }
+      format.json { render :json => @question}
     end
   end
 
@@ -35,6 +38,7 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @question }
+      format.json { render :json => @question}
     end
   end
 
@@ -42,6 +46,12 @@ class QuestionsController < ApplicationController
   def edit
   	@course = current_course
     @question = Question.find(params[:id])
+
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.xml  { render :xml => @question }
+      format.json { render :json => @question}
+    end
   end
 
   # POST /questions
@@ -55,9 +65,11 @@ class QuestionsController < ApplicationController
       if @question.save
         format.html { redirect_to(@question, :notice => 'Question was successfully created.') }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
+        format.json  { render :json => @question, :status => :created, :location => @question }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @question.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -71,9 +83,11 @@ class QuestionsController < ApplicationController
       if @question.update_attributes(params[:question])
         format.html { redirect_to(@question, :notice => 'Question was successfully updated.') }
         format.xml  { head :ok }
+        format.json  { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
+				format.json  { render :json => @question.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -82,15 +96,16 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1.xml
   def destroy
     @question = Question.find(params[:id])
-    Response.find_all_by_qid(@question.id).each do |response| 
+    Response.find_all_by_question_id(@question.id).each do |response| 
   		response.destroy
 		end
     @question.destroy
-    session[:qid] = nil
+    session[:question_id] = nil
 
     respond_to do |format|
       format.html { redirect_to(current_course) }
       format.xml  { head :ok }
+      format.json  { head :ok }
     end
   end
 end
