@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.xml
-	
+	skip_before_filter :verify_authenticity_token
 	respond_to :json
 	
   def index

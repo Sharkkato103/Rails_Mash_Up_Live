@@ -1,7 +1,7 @@
 class ResponsesController < ApplicationController
   # GET /responses
   # GET /responses.xml
-  
+  skip_before_filter :verify_authenticity_token
   respond_to :json
   
 #  def index
@@ -15,6 +15,11 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1
   # GET /responses/1.xml
+	before_filter :question_init
+  def question_init
+  	@question ||= current_question
+	end
+  
   def show
     @response = Response.find(params[:id])
 
@@ -30,7 +35,6 @@ class ResponsesController < ApplicationController
   
 	
   def new
-  	@question = current_question
     @response = Response.new
     @response.question_id = @question.id
 
@@ -43,7 +47,6 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1/edit
   def edit
-  	@question = current_question
     @response = Response.find(params[:id])
     respond_to do |format|
       format.html # edit.html.erb
@@ -55,7 +58,6 @@ class ResponsesController < ApplicationController
   # POST /responses
   # POST /responses.xml
   def create
-  	@question = current_question
     @response = Response.new(params[:response])
     @response.question_id = @question.id
 
@@ -75,7 +77,6 @@ class ResponsesController < ApplicationController
   # PUT /responses/1
   # PUT /responses/1.xml
   def update
-  	@question = current_question
     @response = Response.find(params[:id])
 
     respond_to do |format|
@@ -94,7 +95,6 @@ class ResponsesController < ApplicationController
   # DELETE /responses/1
   # DELETE /responses/1.xml
   def destroy
-		@question = current_question
 		@response = Response.find(params[:id])
     @response.destroy
 

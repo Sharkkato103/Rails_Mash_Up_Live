@@ -11,13 +11,17 @@ class QuestionsController < ApplicationController
 #      format.xml  { render :xml => @questions }
 #    end
 #  end
-	
+	skip_before_filter :verify_authenticity_token
 	respond_to :json
+
+	before_filter :course_init
+	def course_init
+		@course ||= current_course
+	end
 	
   # GET /questions/1
   # GET /questions/1.xml
   def show
-  	@course = current_course
     @question = Question.find(params[:id])
     session[:question_id] = @question.id
     
@@ -31,7 +35,6 @@ class QuestionsController < ApplicationController
   # GET /questions/new
   # GET /questions/new.xml
   def new
-		@course = current_course
   	@question = Question.new
 		@question.course_id = @course.id
 
@@ -44,7 +47,6 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1/edit
   def edit
-  	@course = current_course
     @question = Question.find(params[:id])
 
     respond_to do |format|
@@ -57,7 +59,6 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.xml
   def create
-		@course = current_course
     @question = Question.new(params[:question])
 		@question.course_id = @course.id
 		
