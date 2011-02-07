@@ -8,10 +8,11 @@
 </head>
 <body>
 <div id="header">
-	<%= image_tag "logo.png", :width => '60px' %>
+	<%= link_to image_tag("logo.png"), courses_path %>
 	<h1>SledgeHammer!</h1>
 </div>
 <div id="sidebar">
+	<h4> Courses: </h4>
 	<% Course.all.each do |course| %>
 		<%= link_to course.title, course %> <br />
 	<% end %>

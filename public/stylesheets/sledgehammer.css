@@ -4,7 +4,7 @@ background-color: #fff;
 
 #header {
 width: 300px;
-height: 80px;
+height: 100px;
 margin-left: 330px;
 margin-right:330px;
 background-color:
@@ -12,15 +12,19 @@ background-color:
 
 #header img {
 float: left;
-width: 60px;
+height: 90px;
 }
 
 #sidebar {
 float: left;
 width: 150px;
 height: 1000px;
-margin: 10px;
-background-color: #9AB396;
+margin-left: 10px;
+background-color: #9ab3ae;
+}
+
+#sidebar a {
+margin: 5px 5px 5px 5px;
 }
 
 #content {
