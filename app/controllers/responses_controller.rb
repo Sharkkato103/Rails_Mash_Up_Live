@@ -46,7 +46,7 @@ class ResponsesController < ApplicationController
   	@question = current_question
     @response = Response.find(params[:id])
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # edit.html.erb
       format.xml  { render :xml => @response }
       format.json { render :json => @response }
     end
