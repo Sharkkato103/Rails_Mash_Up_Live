@@ -14,17 +14,18 @@ class CoursesController < ApplicationController
       format.json { render :json => @courses }
     end
   end
-
+	
   # GET /courses/1
   # GET /courses/1.xml
   def show
     @course = Course.find(params[:id])
 		session[:course_id] = @course.id
+		@questions = @course.questions
 		
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @course }
-      format.json { render :json => @course }
+      format.json { render :json => [@course, @questions] }
     end
   end
 

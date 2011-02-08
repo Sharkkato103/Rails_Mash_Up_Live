@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
 
-	before_filter :course_init
+	before_filter :course_init, :except => [:by_course_id]
 	def course_init
 		@course ||= current_course
 	end
@@ -31,6 +31,14 @@ class QuestionsController < ApplicationController
       format.json { render :json => @question}
     end
   end
+
+	def by_course_id
+		questions = Course.find(params[:course_id]).questions
+		
+		respond_to do |format|
+			format.json { render :json => questions }
+		end
+	end
 
   # GET /questions/new
   # GET /questions/new.xml
