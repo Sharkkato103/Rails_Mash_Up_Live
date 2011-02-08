@@ -1,31 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Id:</b>
-  <%= @course.id %>
-</p>
-
-<p>
-  <b>Title:</b>
-  <%= @course.title %>
-</p>
-
-<p>
+	<h2> <%= @course.title %> </h2>
   <b>Professor:</b>
   <%= @course.professor %>
 </p>
 
-<p>
-	Session: <%= session[:course_id] %>
-</p>
-
-<% if @course.questions %>
+<% if not @course.questions.empty? %>
+	<b> Questions: </b> <br />
 	<% @course.questions.each do |question| %>
 		<%= link_to question.title, question %> <br />
 	<% end %>
+	<br />
+<% else %>
+	<p> There are no questions for this class. </p>
 <% end %>
 
 <%= link_to 'Make a new Question', new_question_path %> <br />
 
-<%= link_to 'Edit', edit_course_path(@course) %> 
+<%= link_to 'Edit', edit_course_path(@course) %> | 
+<%= link_to 'Destroy', @course,
+			:confirm => 'Are you sure?', :method => :delete %> |
 <%= link_to 'Back', courses_path %>

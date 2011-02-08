@@ -1,23 +1,15 @@
-<h1>Listing courses</h1>
+<h2>Courses:</h2>
 
-<table>
+<table class="classlist">
   <tr>
-    <th>Id</th>
     <th>Title</th>
     <th>Professor</th>
-    <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @courses.each do |course| %>
   <tr>
-    <td><%= course.id %></td>
-    <td><%= course.title %></td>
+    <td><%= link_to course.title, course %></td>
     <td><%= course.professor %></td>
-    <td><%= link_to 'Show', course %></td>
-    <td><%= link_to 'Edit', edit_course_path(course) %></td>
-    <td><%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

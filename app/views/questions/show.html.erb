@@ -1,26 +1,21 @@
 <p id="notice"><%= notice %></p>
 
+<h2><%= @question.title %> </h2>
 <p>
-  <b>Title:</b>
-  <%= @question.title %>
-</p>
-
-<p>
-  <b>Body:</b>
   <%= @question.body %>
 </p>
 
-<p>
-  <b>Course:</b>
-  <%= @course.id %>
-</p>
-
-<% if @question.responses %>
-	<% @question.responses.each do |response| %>
-		<%= response.body %> <br />
-		<%= link_to 'Edit', edit_response_path(response) %>
-		<br /> <br />
-	<% end %>
+<% if not @question.responses.empty? %>
+	<h3> Responses: </h3>
+	<div class="responses">
+		<% @question.responses.each do |response| %>
+			<%= response.body %> <br />
+			<%= link_to 'Edit', edit_response_path(response) %>
+			<br /> <br />
+		<% end %>
+	</div>
+<% else %>
+	<p> There are no responses to this question </p>
 <% end %>
 
 <%= link_to 'Respond to this Question', new_response_path %> <br />

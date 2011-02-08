@@ -17,16 +17,42 @@ height: 90px;
 
 #sidebar {
 float: left;
-width: 150px;
+width: 240px;
 height: 1000px;
-margin-left: 10px;
-background-color: #9ab3ae;
+padding: 10px;
+margin-left: 15px;
+background-color: #9ab3be;
 }
 
 #sidebar a {
 margin: 5px 5px 5px 5px;
 }
 
-#content {
+#content-bucket {
+padding: 0px 10px 10px 10px;
 background-color: #bff4d2;
+}
+
+#content {
+margin: 10px 10px 10px 280px;
+}
+
+.responses {
+padding-left:60px;
+}
+
+h1 {
+padding: 10px;
+}
+
+h2 {
+padding: 10px 10px 0px 10px;
+}
+
+h4 {
+padding: 0px;
+}
+
+table.classlist tr td {
+padding: 0px 20px 0px 20px;
 }
