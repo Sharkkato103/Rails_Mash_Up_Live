@@ -15,7 +15,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1
   # GET /responses/1.xml
-	before_filter :question_init, :except => [:by_question_id] 
+	before_filter :question_init, :except => [:by_question_id, :mobile_create] 
   def question_init
   	@question ||= current_question
 	end
@@ -32,8 +32,6 @@ class ResponsesController < ApplicationController
 
   # GET /responses/new
   # GET /responses/new.xml
-  
-	
   def new
     @response = Response.new
     @response.question_id = @question.id
@@ -76,6 +74,20 @@ class ResponsesController < ApplicationController
         format.json  { render :json => @response, :status => :created, :location => @response }
       else
         format.html { render :action => "new" }
+        format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @response.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+	def mobile_create
+    @response = Response.new(params[:response])
+		
+    respond_to do |format|
+      if @question.save
+        format.xml  { render :xml => @response, :status => :created, :location => @response }
+        format.json  { render :json => @response, :status => :created, :location => @response }
+      else
         format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
         format.json  { render :json => @response.errors, :status => :unprocessable_entity }
       end

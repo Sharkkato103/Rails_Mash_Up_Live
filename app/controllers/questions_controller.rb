@@ -2,23 +2,24 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.xml 
 	
+	skip_before_filter :verify_authenticity_token
+	respond_to :json
+
+	before_filter :course_init, :except => [:by_course_id, :mobile_create]
+	def course_init
+		@course ||= current_course
+	end
+
 #  def index
 #    @questions = Question.all
-#    session[:question_id] = nil
 
 #    respond_to do |format|
 #      format.html # index.html.erb
 #      format.xml  { render :xml => @questions }
+#      format.json { render :json => @questions }
 #    end
 #  end
-	skip_before_filter :verify_authenticity_token
-	respond_to :json
 
-	before_filter :course_init, :except => [:by_course_id]
-	def course_init
-		@course ||= current_course
-	end
-	
   # GET /questions/1
   # GET /questions/1.xml
   def show
@@ -44,7 +45,6 @@ class QuestionsController < ApplicationController
   # GET /questions/new.xml
   def new
   	@question = Question.new
-		@question.course_id = @course.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,6 +61,20 @@ class QuestionsController < ApplicationController
       format.html # edit.html.erb
       format.xml  { render :xml => @question }
       format.json { render :json => @question}
+    end
+  end
+
+  def mobile_create
+    @question = Question.new(params[:question])
+		
+    respond_to do |format|
+      if @question.save
+        format.xml  { render :xml => @question, :status => :created, :location => @question }
+        format.json  { render :json => @question, :status => :created, :location => @question }
+      else
+        format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @question.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
