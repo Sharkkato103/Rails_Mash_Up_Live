@@ -15,7 +15,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1
   # GET /responses/1.xml
-	before_filter :question_init
+	before_filter :question_init, :except => [:by_question_id] 
   def question_init
   	@question ||= current_question
 	end
@@ -44,7 +44,15 @@ class ResponsesController < ApplicationController
       format.json { render :json => @response }
     end
   end
-
+  
+	def by_question_id
+		responses = Question.find(params[:question_id]).responses
+		
+		respond_to do |format|
+			format.json { render :json => responses }
+		end
+	end
+	
   # GET /responses/1/edit
   def edit
     @response = Response.find(params[:id])
