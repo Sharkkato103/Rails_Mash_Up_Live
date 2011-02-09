@@ -84,7 +84,7 @@ class ResponsesController < ApplicationController
     @response = Response.new(params[:response])
 		
     respond_to do |format|
-      if @question.save
+      if @response.save
         format.xml  { render :xml => @response, :status => :created, :location => @response }
         format.json  { render :json => @response, :status => :created, :location => @response }
       else
