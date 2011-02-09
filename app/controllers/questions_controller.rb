@@ -64,25 +64,13 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def mobile_create
-    @question = Question.new(params[:question])
-		
-    respond_to do |format|
-      if @question.save
-        format.xml  { render :xml => @question, :status => :created, :location => @question }
-        format.json  { render :json => @question, :status => :created, :location => @question }
-      else
-        format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
-        format.json  { render :json => @question.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
   # POST /questions
   # POST /questions.xml
   def create
     @question = Question.new(params[:question])
-		@question.course_id = @course.id
+		if @question.course_id == nil
+			@question.course_id = @course.id
+		end
 		
     respond_to do |format|
       if @question.save

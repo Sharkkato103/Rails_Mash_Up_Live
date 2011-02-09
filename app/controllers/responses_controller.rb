@@ -65,7 +65,9 @@ class ResponsesController < ApplicationController
   # POST /responses.xml
   def create
     @response = Response.new(params[:response])
-    @response.question_id = @question.id
+    if @response.question_id == nil
+    	@response.question_id = @question.id
+  	end
 
     respond_to do |format|
       if @response.save
@@ -80,19 +82,19 @@ class ResponsesController < ApplicationController
     end
   end
 
-	def mobile_create
-    @response = Response.new(params[:response])
-		
-    respond_to do |format|
-      if @response.save
-        format.xml  { render :xml => @response, :status => :created, :location => @response }
-        format.json  { render :json => @response, :status => :created, :location => @response }
-      else
-        format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
-        format.json  { render :json => @response.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+#	def mobile_create
+#    @response = Response.new(params[:response])
+#		
+#    respond_to do |format|
+#      if @response.save
+#        format.xml  { render :xml => @response, :status => :created, :location => @response }
+#        format.json  { render :json => @response, :status => :created, :location => @response }
+#      else
+#        format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
+#        format.json  { render :json => @response.errors, :status => :unprocessable_entity }
+#      end
+#    end
+#  end
 
   # PUT /responses/1
   # PUT /responses/1.xml
