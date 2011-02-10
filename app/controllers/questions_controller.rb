@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
 
-	before_filter :course_init, :except => [:by_course_id, :create]
+	before_filter :course_init, :except => [:by_course_id, :create, :destroy]
 	def course_init
 		@course ||= current_course
 	end
@@ -117,7 +117,9 @@ class QuestionsController < ApplicationController
   		response.destroy
 		end
     @question.destroy
-    session[:question_id] = nil
+    if session[:question_id] != nil
+    	session[:question_id] = nil
+  	end
 
     respond_to do |format|
       format.html { redirect_to(current_course) }

@@ -15,7 +15,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1
   # GET /responses/1.xml
-	before_filter :question_init, :except => [:by_question_id, :create] 
+	before_filter :question_init, :except => [:by_question_id, :create, :destroy] 
   def question_init
   	@question ||= current_question
 	end
@@ -123,9 +123,9 @@ class ResponsesController < ApplicationController
   def destroy
 		@response = Response.find(params[:id])
     @response.destroy
-
+    
     respond_to do |format|
-      format.html { redirect_to(@question) }
+      format.html { redirect_to(question_init) }
       format.xml  { head :ok }
 			format.json  { head :ok }
     end
