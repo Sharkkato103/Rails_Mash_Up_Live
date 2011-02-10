@@ -63,12 +63,16 @@ class ResponsesController < ApplicationController
   # POST /responses
   # POST /responses.xml
   def create
-    @response = Response.new(params[:response])
-    if @response.question_id == nil
+  	if params[:response]==nil
+  		qid = params[:question_id]
+  		bod = params[:body]
+	    @response = Response.new(:question_id => qid, :body => bod)
+    else
+    	@response = Response.new(params[:response])
     	@question = question_init
     	@response.question_id = @question.id
   	end
-
+		
     respond_to do |format|
       if @response.save
         format.html { redirect_to(@question, :notice => 'Response was successfully created.') }
