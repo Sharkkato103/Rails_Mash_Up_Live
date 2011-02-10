@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	respond_to :json
 
-	before_filter :course_init, :except => [:by_course_id, :mobile_create]
+	before_filter :course_init, :except => [:by_course_id, :create]
 	def course_init
 		@course ||= current_course
 	end
@@ -67,8 +67,14 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.xml
   def create
-    @question = Question.new(params[:question])
-		if @question.course_id == nil
+		if params[:question]==nil
+			cid = params[:course_id]
+			tit = params[:title]
+			bod = params[:body]
+			@question = Question.new(:course_id => cid, :title => tit, :body => bod)
+		else
+	    @question = Question.new(params[:question])
+			@course = course_init
 			@question.course_id = @course.id
 		end
 		
