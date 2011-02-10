@@ -15,7 +15,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1
   # GET /responses/1.xml
-	before_filter :question_init, :except => [:by_question_id, :mobile_create] 
+	before_filter :question_init, :except => [:by_question_id, :create] 
   def question_init
   	@question ||= current_question
 	end
@@ -34,7 +34,6 @@ class ResponsesController < ApplicationController
   # GET /responses/new.xml
   def new
     @response = Response.new
-    @response.question_id = @question.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -66,6 +65,7 @@ class ResponsesController < ApplicationController
   def create
     @response = Response.new(params[:response])
     if @response.question_id == nil
+    	@question = question_init
     	@response.question_id = @question.id
   	end
 
